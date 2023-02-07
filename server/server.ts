@@ -21,6 +21,7 @@ app.get('/getpsd', async (req: Request, res: Response) => {
   
   try {
     const psdFile = await psd.open(filePath);
+
     await psdFile.image.saveAsPng(outputPath);
 
     fs.readFile(outputPath, (error, data) => {
@@ -50,6 +51,9 @@ app.post("/getpsd", upload.single("file"), async (req, res) => {
 
       const psdFile = await psd.open(tempFilePath);
       await psdFile.image.saveAsPng(tempImagePath);
+
+      console.log("hi it's me");
+      console.log(psdFile.tree().export());
       
       fs.readFile(tempImagePath, (error, data) => {
         if (error) {
